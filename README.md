@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
+# Expo + NativeWind (TailwindCSS) Starter
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This repo is my personal **Expo + NativeWind (TailwindCSS) template**, so I don’t have to set up Tailwind every time I start a new Expo app.
 
-## Get started
+It’s already wired for:
+- **Expo SDK 54**
+- **Expo Router**
+- **NativeWind v4 + TailwindCSS**
+- **Web support** (Tailwind compiled via PostCSS, `global.css` import)
 
-1. Install dependencies
+## Quick start
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install deps:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Run:
 
-## Learn more
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+If ports are busy on Windows, run with a port:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start --port 8084
+```
 
-## Join the community
+Web:
 
-Join our community of developers creating universal apps.
+```bash
+npx expo start --web --port 8084
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## How to confirm Tailwind works
+
+Open the app and check the home screen (`app/index.tsx`).  
+If you see a **dark rounded card** and styled text, **NativeWind is working** (it uses `className` with Tailwind utilities).
+
+## What makes this work (important files)
+
+- **`babel.config.js`**: enables NativeWind + Reanimated Babel transforms  
+  - Note: `nativewind/babel` is added as a **preset** (not a plugin).
+- **`tailwind.config.js`**: Tailwind config using `nativewind/preset`
+- **`global.css`**: Tailwind directives (`@tailwind base/components/utilities`)
+- **`postcss.config.js`**: lets web compile the Tailwind directives in `global.css`
+- **`metro.config.js`**: allows importing `.css` (web)
+- **`nativewind-env.d.ts`**: TypeScript types for `className`
+- **`app/_layout.tsx`**: imports `../global.css`
+
+## Reuse this template for a new app
+
+The easiest workflow:
+- Copy this folder and rename the app in `app.json` + `package.json`
+- Keep the config files listed above
+- Start building your screens in `app/`
+
+## Notes
+
+- NativeWind works best when you consistently use `className` on React Native components (`View`, `Text`, etc.).
+- If you change Tailwind config, restart Expo with cache clear:
+
+```bash
+npx expo start --clear
+```
